@@ -1,8 +1,10 @@
 <?php
+// require_once "./app/models/Cart.php";
+// require_once "./app/models/Product.php";
+// require_once "./app/models/CartItem.php";
+require_once './vendor/autoload.php';
+use app\models\{Product, Cart, CartItem};
 
-require_once "Product.php";
-require_once "Cart.php";
-require_once "CartItem.php";
 
 $product1 = new Product(1, "iPhone 11", 2500, 10);
 $product2 = new Product(2, "M2 SSD", 400, 10);

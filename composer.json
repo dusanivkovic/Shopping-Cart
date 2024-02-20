@@ -1,0 +1,9 @@
+{
+    "name": "dusan/shopping",
+    "autoload": {
+        "psr-4": {
+            "app\\models\\": "./app/models"
+        }
+    },
+    "require": {}
+}

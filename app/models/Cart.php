@@ -1,5 +1,5 @@
 <?php
-// require_once './Product.php';
+namespace app\models;
 
 class Cart
 {
