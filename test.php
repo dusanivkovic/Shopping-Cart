@@ -2,7 +2,8 @@
 // require_once "./app/models/Cart.php";
 // require_once "./app/models/Product.php";
 // require_once "./app/models/CartItem.php";
-require_once './vendor/autoload.php';
+require_once __DIR__ .'/vendor/autoload.php';
+
 use app\models\{Product, Cart, CartItem};
 
 

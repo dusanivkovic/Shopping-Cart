@@ -2,7 +2,8 @@
     "name": "dusan/shopping",
     "autoload": {
         "psr-4": {
-            "app\\models\\": "./app/models"
+            "app\\models\\": "./app/models",
+            "app\\forms\\": "./app/forms"
         }
     },
     "require": {}
