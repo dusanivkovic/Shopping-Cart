@@ -2,6 +2,7 @@
 namespace app\forms;
 abstract class BaseInput extends HtmlElement
 {
+    public string $type;
     public string $label;
     public string $name;
     public $for;
@@ -10,8 +11,9 @@ abstract class BaseInput extends HtmlElement
     public string $bootstrapClass;
     public string $id;
 
-    public function __construct(string $name, string $label = '', string $for ='', string $placeholder= '', string $value = '', string $bootstrapClass = 'col-md-4', string $id = '')
+    public function __construct(string $type, string $name, string $label = '', string $for ='', string $placeholder= '', string $value = '', string $bootstrapClass = 'col-md-4', string $id = '')
     {
+        $this->type = $type;
         $this->name = $name;
         $this->label = $label;
         $this->for = $for;
