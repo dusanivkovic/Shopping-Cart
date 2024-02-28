@@ -3,7 +3,8 @@
     "autoload": {
         "psr-4": {
             "app\\models\\": "./app/models",
-            "app\\forms\\": "./app/forms"
+            "app\\forms\\": "./app/forms",
+            "app\\lib\\": "./app/lib"
         }
     },
     "require": {}
