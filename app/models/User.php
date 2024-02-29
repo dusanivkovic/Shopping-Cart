@@ -1,20 +1,20 @@
 <?php
 namespace app\models;
-require_once './vendor/autoload.php';
+// require_once __DIR__ . '/../../vendor/autoload.php';
 use app\lib\{Session, Db};
 class User
 {
-    public string $firstName;
-    public string $lastName;
-    public string $mail;
-    public string $password;
+    public  Db $db;
+    public string $firstName,  $lastName,  $mail,  $password;
 
-    public function __construct($firstName, $lastName, $mail, $password)
+    public function __construct($db, $firstName, $lastName, $mail, $password)
     {
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->mail = $mail;
-        $this->password = $password;
+        $this->db = $db;
+        $this->firstName = $this->db->validation($firstName);
+        $this->lastName = $this->db->validation($lastName);
+        $this->mail = $this->db->validation($mail);
+        $this->password = $this->db->validation($password);
+
     }
 
     public function getFirstName(): string
@@ -25,5 +25,35 @@ class User
     public function setFirstName($userName): void
     {
         $this->firstName = $userName;
+    }
+
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName($lastName): void
+    {
+        $this->lastName = $lastName;
+    }
+
+    public function getMail(): string
+    {
+        return $this->mail;
+    }
+
+    public function setMail($mail): void
+    {
+        $this->mail = $mail;
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword($password): void
+    {
+        $this->password = $password;
     }
 }

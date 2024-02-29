@@ -1,3 +1,8 @@
+<?php
+require_once './../vendor/autoload.php';
+use app\lib\Session;
+Session::init();
+?>
 <!doctype html>
 <html lang="en">
   <head>
