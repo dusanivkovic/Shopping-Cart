@@ -8,6 +8,6 @@ Session::set('name', $_POST['firstname']);
 $user = new User(new Db, $_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['password']);
 
     echo 
-    '<pre>' .
-         $user->getFirstName() . '<br>' .Session::get('name') .
     '<pre>';
+         print_r($user);
+    echo '<pre>';
