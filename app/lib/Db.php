@@ -1,9 +1,9 @@
 <?php
 namespace app\lib;
-
+require_once __DIR__ . '/../../config/config.php';
 use mysqli;
 
-require_once __DIR__ . '/../../config/config.php';
+
 class Db
 {
   public $host = DB_HOST;
@@ -11,6 +11,7 @@ class Db
   public $password = DB_PASSWORD;
   public $dataBase = DB_NAME;
   public $conn;
+  public $errors = [];
 
   public function __construct()
   {
@@ -19,19 +20,14 @@ class Db
 
   public function conect()
   {
-    $this->conn = new mysqli($this->host, $this->user, $this->password, $this->dataBase) or die ('connection filed: ' .$this->conn->connect_error);
-    if ($this->conn->connect_error)
-    {
-      die ('Connection fail: '.$this->conn->connect_errno);
-      return false;
-    }
-    echo 'Successfully!';
+    $this->conn = new mysqli($this->host, $this->user, $this->password, $this->dataBase);
+    $this->errors = $this->conn->connect_error ?('Connection fail: '.$this->conn->connect_errno) : '';
   }
 
   public function selectRecords ($query)
   {
     $result = $this->conn->query($query) or die ('connection filed: ' .$this->conn->error . __LINE__);
-    return $result ?? false;
+    return $result->num_rows > 0 ? $result : false;
   }
 
   public function insertRecord ($query)
