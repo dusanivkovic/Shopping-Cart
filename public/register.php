@@ -3,6 +3,8 @@ include_once __DIR__ . '/../view/header.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use app\forms\{Button, Form, TextInput};
+use app\lib\Session;
+
 $form = new Form('./../controllers/registerController.php');
 $form->addElement(new TextInput('text', 'firstname', 'First name', 'firstName', 'First Name', '', 'col-md-6'));
 $form->addElement(new TextInput('text', 'lastname', 'Last name', 'lastName', 'Last Name', '', 'col-md-6'));

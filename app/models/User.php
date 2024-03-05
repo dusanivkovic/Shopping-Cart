@@ -1,20 +1,39 @@
 <?php
 namespace app\models;
 // require_once __DIR__ . '/../../vendor/autoload.php';
-use app\lib\{Session, Db};
+use app\lib\{Session, Db, Format};
 class User
 {
     public  Db $db;
+    public Format $fm;
     public string $firstName,  $lastName,  $mail,  $password;
+    private const QUERY = "INSERT INTO users (firstname, lastname, mail, password) VALUES ('$firstName', '$lastName', '$mail', '$password')";
 
-    public function __construct($db, $firstName, $lastName, $mail, $password)
+    // public function __construct($db)
+    // {
+    //     $this->db = new Db ();
+    //     $this->fm = new Format ();
+    // }
+    public function userRegistration ()
     {
-        $this->db = $db;
-        $this->firstName = $this->db->validation($firstName);
-        $this->lastName = $this->db->validation($lastName);
-        $this->mail = $this->db->validation($mail);
-        $this->password = $this->db->validation($password);
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $this->fm = new Format($_POST);
+            $errors = $this->fm->validate();
+        
+            if (empty($errors)) {
+                // Proceed with registration
+                // For example, insert data into database
+                return $this->db = new Db;
+                $this->db->insertRecord($this->QUERY);
 
+            } else {
+                // Display errors to the user
+            }
+        }
+        // $firtsName = $this->fm->validation($firstName);
+        // $lastName = $this->fm->validation($lastName);
+        // $mail = $this->fm->validation($mail);
+        // $password = $this->fm->validation($password);
     }
 
     public function getFirstName(): string
