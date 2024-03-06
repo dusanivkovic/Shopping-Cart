@@ -8,18 +8,26 @@ $user = new User();
 // $firstName = $user->db->conn->real_escape_string($_POST['firstname']);
 // $lastName = $user->db->conn->real_escape_string($_POST['lastname']);
 // $mail = $user->db->conn->real_escape_string($_POST['email']);
-// $firstName = $_POST['firstname'];
-// $lastName = $_POST['lastname'];
-// $mail = $_POST['email'];
-// $password = $_POST['password'];
-// $query = "INSERT INTO users (firstname, lastname, mail, password) VALUES ('$firstName', '$lastName', '$mail', '$password')";
-$user->userRegistration();
-$user->db->insertRecord($query);
+
+$user->userValidation();
+echo 
+'<pre>';
+     var_dump($user->fm->hasError('firstname'));
+echo '<pre>';
+// exit();
+$firstName = $user->getFirstName();
+$lastName = $user->getLastName();
+$mail = $user->getMail();
+$password = $user->getPassword();
+//$query = "INSERT INTO users (firstname, lastname, mail, password) VALUES ('$firstName', '$lastName', '$mail', '$password')";
+
+//$user->db->insertRecord($query);
+
 Session::set('name', $_POST['firstname']);
-$querySlct = 'SELECT * FROM users';
+//$querySlct = 'SELECT * FROM users';
 
 // $user->db->selectRecords($querySlct);
     echo 
     '<pre>';
-         print_r($user);
+         print_r($user->fm->getErrors());
     echo '<pre>';

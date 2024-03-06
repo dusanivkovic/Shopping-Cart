@@ -4,8 +4,8 @@ namespace app\lib;
 
 class Format 
 {
-	private $data;
-	private $errors = [];
+	public $data;
+	public $errors = [];
 
 	public function __construct($postData)
 	{
@@ -22,7 +22,7 @@ class Format
 	}
 
 	private function validateFirstname() {
-        $firstName = trim($this->data['firstname']);
+        $firstName = $this->validation($this->data['firstname']);
 
         if (empty($firstName)) {
             $this->addError('firstname', 'First name is required');
@@ -30,7 +30,7 @@ class Format
     }
 
 	private function validateLastName() {
-        $lastName = trim($this->data['lastname']);
+        $lastName = $this->validation($this->data['lastname']);
 
         if (empty($lastName)) {
             $this->addError('lastname', 'Last name is required');
@@ -38,7 +38,7 @@ class Format
     }
 
     private function validateEmail() {
-        $email = trim($this->data['email']);
+        $email = $this->validation($this->data['email']);
 
         if (empty($email)) {
             $this->addError('email', 'Email is required');
@@ -57,7 +57,31 @@ class Format
         }
     }
 
+    public function validation($data)
+    {
+        $data = trim($data);
+        $data = stripcslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
     private function addError($key, $message) {
         $this->errors[$key] = $message;
+    }
+
+    public function getErrors (): array
+    {
+        return $this->errors;
+    }
+
+    public function getFirstError($attribute)
+    {
+        $errors = $this->errors[$attribute] ?? [];
+        return $errors[0] ?? '';
+    }
+
+    public function hasError ($attributes)
+    {
+        return $this->errors[$attributes] ?? false;
     }
 }

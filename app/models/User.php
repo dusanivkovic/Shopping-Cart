@@ -6,73 +6,67 @@ class User
 {
     public  Db $db;
     public Format $fm;
-    public string $firstName,  $lastName,  $mail,  $password;
-    private const QUERY = "INSERT INTO users (firstname, lastname, mail, password) VALUES ('$firstName', '$lastName', '$mail', '$password')";
 
-    // public function __construct($db)
-    // {
-    //     $this->db = new Db ();
-    //     $this->fm = new Format ();
-    // }
-    public function userRegistration ()
+    // public string $firstName,  $lastName,  $mail,  $password;
+
+    public function userValidation ()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $this->fm = new Format($_POST);
             $errors = $this->fm->validate();
-        
+       
             if (empty($errors)) {
                 // Proceed with registration
                 // For example, insert data into database
-                return $this->db = new Db;
-                $this->db->insertRecord($this->QUERY);
-
+                $this->db = new Db;
             } else {
                 // Display errors to the user
+                // echo isset($errors['firstname']) ? $errors['firstname'] : '';
+                // header('location: ./../public/register.php');
             }
         }
-        // $firtsName = $this->fm->validation($firstName);
-        // $lastName = $this->fm->validation($lastName);
-        // $mail = $this->fm->validation($mail);
-        // $password = $this->fm->validation($password);
+
     }
 
     public function getFirstName(): string
     {
-        return $this->firstName;
+        return $this->fm->data['firstname'];
     }
     
     public function setFirstName($userName): void
     {
-        $this->firstName = $userName;
+        $this->fm->data['firstname'] = $userName;
     }
 
     public function getLastName(): string
     {
-        return $this->lastName;
+        return $this->fm->data['lastname'];
     }
 
     public function setLastName($lastName): void
     {
-        $this->lastName = $lastName;
+        $this->fm->data['lastName'] = $lastName;
     }
 
     public function getMail(): string
     {
-        return $this->mail;
+        return $this->fm->data['email'];
     }
 
     public function setMail($mail): void
     {
-        $this->mail = $mail;
+        $this->fm->data['email'] = $mail;
     }
 
     public function getPassword(): string
     {
-        return $this->password;
+        return $this->fm->data['password'];
     }
 
     public function setPassword($password): void
     {
-        $this->password = $password;
+        $this->fm->data['password'] = $password;
     }
+
+
 }

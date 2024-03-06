@@ -1,17 +1,20 @@
 <?php
 namespace app\forms;
+use app\lib\Format;
 abstract class BaseInput extends HtmlElement
 {
     public string $type;
     public string $label;
     public string $name;
-    public $for;
+    public string $for;
     public string $placeholder;
     public string $value;
     public string $bootstrapClass;
+    public string $isValid;
     public string $id;
+    public Format $fm;
 
-    public function __construct(string $type, string $name, string $label = '', string $for ='', string $placeholder= '', string $value = '', string $bootstrapClass = 'col-md-4', string $id = '')
+    public function __construct(string $type, string $name, string $label = '', string $for ='', string $placeholder= '', string $value = '', string $bootstrapClass = 'col-md-4', string $isValid, Format $fm, string $id = '')
     {
         $this->type = $type;
         $this->name = $name;
@@ -20,6 +23,8 @@ abstract class BaseInput extends HtmlElement
         $this->placeholder = $placeholder;
         $this->value = $value;
         $this->bootstrapClass = $bootstrapClass;
+        $this->isValid = $isValid;
+        $this->fm = new Format($_POST);
         $this->id = $id;
     }
 
