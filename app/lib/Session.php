@@ -22,4 +22,5 @@ class Session
         session_destroy();
         session_unset();
     }
+    
 }

@@ -1,5 +1,8 @@
 <?php
 namespace app\forms;
+
+use app\lib\Session;
+
 class inputField extends BaseInput
 {
   public function renderInput(): string
@@ -11,7 +14,8 @@ class inputField extends BaseInput
     $this->name, 
     $this->value, 
     $this->bootstrapClass, 
-    $this->fm->hasError($this->name) ? 'is-invalid' : 'isvalid', 
+    unserialize(Session::get('user')) ? 'is-invalid' : 'is-valid', 
+    // '',
     $this->placeholder);
   }
 }

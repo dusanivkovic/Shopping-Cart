@@ -6,6 +6,7 @@ class User
 {
     public  Db $db;
     public Format $fm;
+    // $fm = new Format ($_POST);
 
     // public string $firstName,  $lastName,  $mail,  $password;
 
@@ -68,5 +69,9 @@ class User
         $this->fm->data['password'] = $password;
     }
 
+    public function setUserSession ()
+    {
+        Session::set('user', serialize($this));
+    }
 
 }

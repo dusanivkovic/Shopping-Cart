@@ -19,15 +19,16 @@ $firstName = $user->getFirstName();
 $lastName = $user->getLastName();
 $mail = $user->getMail();
 $password = $user->getPassword();
-//$query = "INSERT INTO users (firstname, lastname, mail, password) VALUES ('$firstName', '$lastName', '$mail', '$password')";
+// $query = "INSERT INTO users (firstname, lastname, mail, password) VALUES ('$firstName', '$lastName', '$mail', '$password')";
 
-//$user->db->insertRecord($query);
+// $user->db->insertRecord($query);
 
-Session::set('name', $_POST['firstname']);
+Session::set('user', serialize($user));
+$user->setUserSession();
 //$querySlct = 'SELECT * FROM users';
 
 // $user->db->selectRecords($querySlct);
     echo 
     '<pre>';
-         print_r($user->fm->getErrors());
+         var_dump(unserialize(Session::get('user'))->fm->hasError('password'));
     echo '<pre>';
