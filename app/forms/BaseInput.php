@@ -6,8 +6,8 @@ use app\models\Model;
 abstract class BaseInput extends HtmlElement
 {
     public string $type;
-    public string $label;
     public string $name;
+    public string $label;
     public string $for;
     public string $placeholder;
     public string $value;
@@ -15,18 +15,16 @@ abstract class BaseInput extends HtmlElement
     public Model $model;
     public string $id;
 
-    public function __construct(string $type, string $name, string $label = '', string $for ='', string $placeholder= '', string $value = '', string $bootstrapClass = 'col-md-4', Model $model)
+    public function __construct(string $label = '', string $for ='', string $bootstrapClass = 'col-md-4', Model $model)
     {
-        $this->type = $type;
-        $this->name = $name;
+        // $this->type = $type;
+        // $this->name = $name;
         $this->label = $label;
         $this->for = $for;
-        $this->placeholder = $placeholder;
-        $this->value = $value;
+        // $this->placeholder = $placeholder;
+        // $this->value = $value;
         $this->bootstrapClass = $bootstrapClass;
         $this->model = $model;
-        // $this->isValid = $isValid;
-        // $this->model = $model;
     }
 
     public function render (): string

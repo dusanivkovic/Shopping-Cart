@@ -1,6 +1,9 @@
 <?php
 namespace app\forms;
-abstract class HtmlElement 
+
+use app\models\Model;
+
+abstract class HtmlElement extends Model
 {
     abstract public function render (): string;
 }
