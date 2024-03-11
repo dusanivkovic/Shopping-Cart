@@ -4,6 +4,7 @@ require_once __DIR__ .'/../vendor/autoload.php';
 use app\models\User;
 use app\lib\{Session, Db, Format};
 use app\models\Model;
+Session::init();
 
 $user = new User ();
 // $model = new Model ();
@@ -40,12 +41,10 @@ $query = "INSERT INTO users (firstname, lastname, mail, password) VALUES ('$firs
 
 // $user->db->insertRecord($query);
 
-Session::set('user', serialize($user));
 $user->setUserSession();
 //$querySlct = 'SELECT * FROM users';
 
 // $user->db->selectRecords($querySlct);
-    echo 
-    '<pre>';
-         print_r($user);
+    echo '<pre>';
+         print_r(unserialize(Session::get('user')));
     echo '<pre>';

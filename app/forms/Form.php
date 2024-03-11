@@ -2,7 +2,7 @@
 namespace app\forms;
 class Form extends HtmlElement
 {
-    private array $elements = [];
+    protected array $elements = [];
     public string $action;
     public string $method;
     public string $id;
