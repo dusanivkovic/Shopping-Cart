@@ -35,11 +35,4 @@ class Db
     return $result ?? false;    
   }
 
-  // public function validation($data)
-  // {
-  //   $data = trim($data);
-  //   $data = stripcslashes($data);
-  //   $data = htmlspecialchars($data);
-  //   return $data;
-	// }
 } 

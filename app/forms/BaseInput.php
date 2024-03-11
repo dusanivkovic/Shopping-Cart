@@ -1,7 +1,8 @@
 <?php
 namespace app\forms;
-use app\lib\Format;
-use app\models\User;
+// use app\lib\Format;
+use app\models\Model;
+
 abstract class BaseInput extends HtmlElement
 {
     public string $type;
@@ -11,10 +12,10 @@ abstract class BaseInput extends HtmlElement
     public string $placeholder;
     public string $value;
     public string $bootstrapClass;
-    public string $isValid;
+    public Model $model;
     public string $id;
 
-    public function __construct(string $type, string $name, string $label = '', string $for ='', string $placeholder= '', string $value = '', string $bootstrapClass = 'col-md-4', string $isValid)
+    public function __construct(string $type, string $name, string $label = '', string $for ='', string $placeholder= '', string $value = '', string $bootstrapClass = 'col-md-4', Model $model)
     {
         $this->type = $type;
         $this->name = $name;
@@ -23,20 +24,22 @@ abstract class BaseInput extends HtmlElement
         $this->placeholder = $placeholder;
         $this->value = $value;
         $this->bootstrapClass = $bootstrapClass;
-        $this->isValid = $isValid;
-        // $this->id = $id;
+        $this->model = $model;
+        // $this->isValid = $isValid;
+        // $this->model = $model;
     }
 
     public function render (): string
     {
         return sprintf('
-            <div class="%s"><span></span>
+            <div class="%s">
                 <label for="%s" class="form-check-label">%s</label>%s', 
                 $this->bootstrapClass, 
                 $this->for, 
                 $this->label, 
                 $this->renderInput());
     }
+
 
     abstract public function renderInput (): string;
 }
