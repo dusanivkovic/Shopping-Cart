@@ -7,18 +7,19 @@ use app\lib\Session;
 use app\models\{Model, User};
 $model = new Model();
 $usr = unserialize(Session::get('user'));
+
+
+if ($usr)
+{
+    foreach ($usr->fm->errors as $key => $value)
+    {
+        $model->addError($key, $value);
+    }
+}
 echo '<pre>';
-print_r($usr);
+var_dump($model);
 echo '</pre>';
 
-if (isset($usr))
-{
-
-}
-foreach ($usr->fm->errors as $key => $value)
-{
-    $model->addError($key, $value);
-}
 
 // use app\lib\Format;
 // use app\lib\Session;
@@ -37,7 +38,7 @@ $form->addElement(new Button('Submit'));
     echo '<pre>';
      print_r($form);
     echo '</pre>';
-    // Session::destroy();
+    Session::destroy();
 ?>
 </div>
 <?php
