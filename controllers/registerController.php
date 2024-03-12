@@ -18,11 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
      $user->setFormat(new Format($_POST));
      $errors = $user->fm->validate();
+     $mail = $user->getMail();
      $user->setUserSession();
      $user->setDataBase(new Db);
+     $checkedUser = "SELECT * FROM users WHERE mail = '$mail'";
      if (empty($errors))
      {
-          $user->setDataBase(new Db);
+          // $user->setDataBase(new Db);
           // header('location: ./../public/register.php');
      }else
      {
@@ -47,10 +49,10 @@ $query = "INSERT INTO users (firstname, lastname, mail, password) VALUES ('$firs
 // $user->db->insertRecord($query);
 
 
-$querySlct = 'SELECT * FROM users';
 
 
-$users = $user->db->selectRecords($querySlct);
+
+$users = $user->db->selectRecords($checkedUser);
 $users->fetch_all(MYSQLI_ASSOC);
 
     echo '<pre>';
@@ -59,7 +61,7 @@ $users->fetch_all(MYSQLI_ASSOC);
      {
           foreach ($row as $key => $value)
           {
-               echo $value;
+               echo $value . '<br>';
           }
 
      }
