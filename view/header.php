@@ -2,6 +2,9 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 use app\lib\Session;
 Session::init();
+$user = unserialize(Session::get('user'));
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -24,10 +27,10 @@ Session::init();
         </div>
         <div class="d-flex">
           <span class="nav-item me-2">
-            <a class="nav-link" href="register.php">Register</a>
+            <?php echo (!$user || !empty($user->fm->errors)) ? '<a class="nav-link" href="register.php">Register</a>' : 'Hello ' . $user->getFirstName()  ?>
           </span>
           <span class="nav-item">
-            <a class="nav-link" href="#">Login</a>
+            <a class="nav-link" href="<?php echo (!$user || !empty($user->fm->errors)) ? 'login.php' : 'register.php' ?>"><?php echo (!$user || !empty($user->fm->errors)) ? 'Sign In' : 'Sign Out' ?></a>
           </span>
         </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

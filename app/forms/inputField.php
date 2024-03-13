@@ -23,8 +23,8 @@ class InputField extends BaseInput
     $this->type, 
     $this->name, 
     $this->value, 
-    $this->model->hasError($this->name) ? 'is-invalid' : 'is-valid',
-    $this->placeholder,
+    $this->model->hasError($this->name) ? 'is-invalid' : '',
+    $this->placeholder
     );
   }
 }

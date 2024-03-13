@@ -8,30 +8,42 @@ Session::init();
 
 $user = new User ();
 
-// $model = new Model ();
-
-// $firstName = $user->db->conn->real_escape_string($_POST['firstname']);
-// $lastName = $user->db->conn->real_escape_string($_POST['lastname']);
-// $userName = $user->db->conn->real_escape_string($_POST['email']);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") 
 {
      $user->setFormat(new Format($_POST));
      $errors = $user->fm->validate();
-     $mail = $user->getMail();
      $user->setUserSession();
      $user->setDataBase(new Db);
-     $checkedUser = "SELECT * FROM users WHERE mail = '$mail'";
+
      if (empty($errors))
      {
-          // $user->setDataBase(new Db);
-          // header('location: ./../public/register.php');
+          $firstName = $user->getFirstName();
+          $lastName = $user->getLastName();
+          $mail = $user->getMail();
+          $password = $user->getPassword();
+          $checkedUser = "SELECT * FROM users WHERE mail = '$mail'";
+          $userMail = $user->db->selectRecords($checkedUser);
+          if ($userMail)
+          {
+               Session::destroy();
+               header('location: ./../public/login.php');
+               exit();
+          }else
+          {
+               $query = "INSERT INTO users (firstname, lastname, mail, password) VALUES ('$firstName', '$lastName', '$mail', '$password')";
+
+               $user->db->insertRecord($query);
+               header('location: ./../public/index.php');
+               exit();
+          }
+
      }else
      {
           echo isset($errors['password']) ? $user->fm->getFirstError('password') . '<br>' : '';
           echo isset($errors['firstname']) ? $user->fm->getFirstError('firstname') : '';
-          // header('location: ./../public/register.php');
-          // exit ();
+          header('location: ./../public/register.php');
+          exit ();
      }
 }
 
@@ -40,30 +52,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 //      var_dump($user);
 // echo '<pre>';
 // exit();
-$firstName = $user->getFirstName();
-$lastName = $user->getLastName();
-$mail = $user->getMail();
-$password = $user->getPassword();
-$query = "INSERT INTO users (firstname, lastname, mail, password) VALUES ('$firstName', '$lastName', '$mail', '$password')";
-
-// $user->db->insertRecord($query);
 
 
 
 
 
-$users = $user->db->selectRecords($checkedUser);
-$users->fetch_all(MYSQLI_ASSOC);
 
-    echo '<pre>';
-//     var_dump($result);
-     foreach ($users as $row)
-     {
-          foreach ($row as $key => $value)
-          {
-               echo $value . '<br>';
-          }
+// $users = $user->db->selectRecords($checkedUser);
+// $users->fetch_all(MYSQLI_ASSOC);
 
-     }
-     //     print_r(unserialize(Session::get('user')));
-    echo '<pre>';
+//     echo '<pre>';
+
+//      foreach ($users as $row)
+//      {
+//           foreach ($row as $key => $value)
+//           {
+//                echo $value . '<br>';
+//           }
+
+//      }
+
+//     echo '<pre>';

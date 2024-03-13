@@ -25,6 +25,14 @@ class Model
         return $this->errors;
 	}
 
+    public function validateLogin()
+    {
+        $this->validateEmail();
+        $this->validatePassword();
+
+        return $this->errors;
+	}
+
     public function validation($data)
     {
         $data = trim($data);
