@@ -8,19 +8,7 @@ use app\models\{Model, User};
 $model = new Model();
 $currentUser = unserialize(Session::get('user'));
 
-
-
-if ($currentUser)
-{
-    foreach ($currentUser->fm->errors as $key => $value)
-    {
-        $model->addError($key, $value);# Set error into Model instance for Bootstrap validation
-    }
-}
-// echo '<pre>';
-// print_r($model);
-// echo '</pre>';
-
+$model->setErrors($currentUser);
 
 $form = new Form('./../controllers/registerController.php');
 $form->addElement(new inputField('text', 'firstname', 'First name', 'firstName', 'First Name', '', 'col-md-6', $model));

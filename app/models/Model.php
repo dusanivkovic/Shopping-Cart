@@ -90,5 +90,16 @@ class Model
     {
         return $this->errors[$attributes] ?? false;
     }
+
+    public function setErrors ($attribute)
+    {
+        if ($attribute)
+        {
+            foreach ($attribute->fm->errors as $key => $value)
+            {
+                $this->addError($key, $value);# Set error into Model instance for Bootstrap validation
+            }
+        }
+    }
     
 }

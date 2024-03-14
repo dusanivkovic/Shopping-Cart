@@ -4,6 +4,12 @@ use app\lib\Session;
 Session::init();
 $user = unserialize(Session::get('user'));
 
+if (isset($_GET['action']) && $_GET['action'] == 'logout')
+  {
+      Session::destroy();
+      header('location: index.php');
+      exit();
+  }
 
 ?>
 <!doctype html>
@@ -27,10 +33,10 @@ $user = unserialize(Session::get('user'));
         </div>
         <div class="d-flex">
           <span class="nav-item me-2">
-            <?php echo (!$user || !empty($user->fm->errors)) ? '<a class="nav-link" href="register.php">Register</a>' : 'Hello ' . $user->getFirstName()  ?>
+            <?php echo !Session::get('userName') ? '<a class="nav-link" href="register.php">Register</a>' : 'Hello ' . Session::get('userName')  ?>
           </span>
           <span class="nav-item">
-            <a class="nav-link" href="<?php echo (!$user || !empty($user->fm->errors)) ? 'login.php' : 'register.php' ?>"><?php echo (!$user || !empty($user->fm->errors)) ? 'Sign In' : 'Sign Out' ?></a>
+            <a class="nav-link" href="<?php echo !Session::get('userName') ? 'login.php' : 'index.php?action=logout' ?>"><?php echo !Session::get('userName') ? 'Sign In' : 'Sign Out' ?></a>
           </span>
         </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
