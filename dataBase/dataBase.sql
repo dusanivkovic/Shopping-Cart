@@ -9,10 +9,17 @@ CREATE TABLE users (
 INSERT INTO `users`(`user_id`, `firstname`, `lastname`, `mail`, `password`) VALUES ('1','Dusan','Ivkovic','dusan.ivkovic@skolers.org','12345678')
 
 CREATE TABLE `product` (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    product_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(50) NOT NULL,
     price FLOAT NOT NULL,
     availableQuantity INT
+    )
+
+CREATE TABLE `cart` (
+    item_id INT UNSIGNED,
+    quantity int,
+    product_id int,
+    user_id int
     )
 
 INSERT INTO `product`(`id`, `title`, `price`, `availableQuantity`) VALUES (
