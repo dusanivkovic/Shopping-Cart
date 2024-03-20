@@ -5,7 +5,7 @@ use app\lib\{Session, Db, Format};
 
 class User extends Model
 {
-    public  Db $db;
+    // public  Db $db;
     public Format $fm;
     // public Model $model;
 
@@ -14,10 +14,10 @@ class User extends Model
         return $this->fm = $fm;
     }
 
-    public function setDataBase (Db $db): Db
-    {
-        return $this->db = $db;
-    }
+    // public function setDataBase (Db $db): Db
+    // {
+    //     return $this->db = $db;
+    // }
 
     public function getFirstName(): string
     {

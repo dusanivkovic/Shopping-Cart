@@ -22,6 +22,13 @@ CREATE TABLE `cart` (
     user_id int
     )
 
+ALTER TABLE cart 
+ADD COLUMN mail varchar(50) not NULL;
+
+UPDATE cart t1
+INNER JOIN users t2 ON t1.user_id = t2.user_id
+set t1.mail = t2.mail;
+
 INSERT INTO `product`(`id`, `title`, `price`, `availableQuantity`) VALUES (
 'Kempa Kempa GOLD Shorts, schwarz, XXS, 200319791',	'165',	'10',
 'Kempa Kempa GOLD Shorts, schwarz, XXS, 200319801',	'138',	'10',

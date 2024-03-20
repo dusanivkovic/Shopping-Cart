@@ -7,6 +7,7 @@ class Model
     public array $errors = [];
     public $data;
     public array $attributes = [];
+    public  Db $db;
     const FIRST_NAME = 'First name is required';
     const LAST_NAME = 'Last name is required';
     const PASSWORD_REQUIRED = 'Password is required';
@@ -100,6 +101,11 @@ class Model
                 $this->addError($key, $value);# Set error into Model instance for Bootstrap validation
             }
         }
+    }
+
+    public function setDataBase (Db $db): Db
+    {
+        return $this->db = $db;
     }
     
 }
