@@ -8,11 +8,6 @@ $model = new Model ();
 $db = $model->setDataBase(new Db);
 $result = ($db->selectRecords($query))->fetch_all(MYSQLI_ASSOC);
 
-// foreach ($result as $row)
-// {
-//   echo '<pre>' . print_r($row['title']) . '<br>' .'</pre>';
-// }
-
 ?>
 <?php foreach ($result as $product): ?>
 
@@ -27,7 +22,10 @@ $result = ($db->selectRecords($query))->fetch_all(MYSQLI_ASSOC);
     <input type="hidden" name="" value="<?php echo $product['product_id'] ?>">
   </ul>
   <div class="card-body">
-    <a href="#" class="card-link">Add to Cart</a>
+    <div class="input-group mb-3">
+      <input id="quantity" type="number" class="form-control" placeholder="" value="0" min="0">
+      <a class="btn btn-outline-info" type="button" id="button-addon2"    href="./../controllers/cart.php?product=<?php echo $product['product_id']?>" class="card-link">Add to Cart</a>
+    </div>
     <a href="#" class="card-link">Another link</a>
   </div>
 </div>

@@ -1,16 +1,19 @@
 <?php
 namespace app\lib;
 require_once __DIR__ . '/../../config/config.php';
+
+use app\models\Model;
 use mysqli;
 
 
-class Db
+class Db extends Model
 {
   public $host = DB_HOST;
   public $user = DB_USER;
   public $password = DB_PASSWORD;
   public $dataBase = DB_NAME;
   public $conn;
+  // public Model $model;
 
   public function __construct()
   {
