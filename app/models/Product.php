@@ -80,4 +80,5 @@ class Product
         //TODO Implement method
         return $cart->removeProduct($this);
     }
+
 }

@@ -11,12 +11,6 @@ $currentUser = unserialize(Session::get('user'));
 
 $model->setErrors($currentUser);
 
-
-// echo '<pre>';
-// print_r($model);
-// echo '</pre>';
-
-
 $form = new Form('./../controllers/loginController.php');
 
 $form->addElement(new inputField('mail', 'email', 'Email', 'email', 'Email', '', 'col-12', $model));

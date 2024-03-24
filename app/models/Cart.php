@@ -1,12 +1,13 @@
 <?php
 namespace app\models;
+use app\lib\Session;
 
 class Cart
 {
     /**
      * @var CartItem[]
      */
-    private array $items = [];
+    public array $items = [];
 
         // TODO Generate getters and setters of properties
     public function getCartItems (): array
@@ -97,4 +98,8 @@ class Cart
         print_r($this);
     }
     
+    public function setCartItemSession ()
+    {
+        Session::set('cart', serialize($this));
+    }
 }

@@ -1,10 +1,11 @@
 <?php
 namespace app\models;
+use app\lib\Session;
 
 class CartItem
 {
-    private Product $product;
-    private int $quantity;
+    public Product $product;
+    public int $quantity;
 
     // TODO Generate constructor with all properties of the class
     public function __construct(Product $product, int $quantity)
@@ -52,4 +53,5 @@ class CartItem
             $this->quantity --;
         }
     }
+
 }

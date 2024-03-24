@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 use app\lib\Session;
 Session::init();
-$user = unserialize(Session::get('user'));
+// $user = unserialize(Session::get('user'));
 
 if (isset($_GET['action']) && $_GET['action'] == 'logout')
   {
