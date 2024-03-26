@@ -26,7 +26,7 @@ $result = ($db->selectRecords($query))->fetch_all(MYSQLI_ASSOC);
   <div class="card-body">
     <form id="quantity" action="./../controllers/cart.php" method="post">
       <div class="input-group mb-3">
-        <input name="quantity" type="number" class="form-control" placeholder="" value="0" min="0">
+        <input name="quantity" type="hidden" class="form-control" placeholder="" value="1" min="0">
         <input type="hidden" name="productID" value="<?php echo $product->getProductId()?>">
         <button  class="btn btn-outline-info card-link" type="submit" id="button-addon2">Add to Cart</button>
       </div>
@@ -58,25 +58,29 @@ $result = ($db->selectRecords($query))->fetch_all(MYSQLI_ASSOC);
             </tr>
           </thead>
           <tbody>
+          <?php if ($cart) : ?>  
           <?php foreach ($cart as $row) : ?>
-
             <?php foreach ($row as $key => $cartItem ) : ?> 
-            <tr class="table-active">
-              <td>
-                <span><?php echo $cartItem->getProduct()->getProductTitle() ?></span>
-                <input type="hidden" name="productID" value="<?php echo $cartItem->getProduct()->getProductId() ?>">
-              </td>
-              <td>
-                <div class="input-group mb-3">
-                  <input name="quantity" type="number" class="form-control" placeholder="" value="<?php echo $cartItem->getQuantity() ?>" min="0">
-                  <a href="./../controllers/cart.php?" class="btn btn-outline-info card-link" type="submit" id="button-addon2">Save</a>
-                </div>
-              </td>
-            </tr>
+              <tr class="table-active">
+                <td>
+                  <?php echo $cartItem->getProduct()->getProductTitle() ?>
+                </td>
+                <td>
+                  <div id="edit-cart" class="input-group mb-3">
+                    <form action="./../controllers/cart.php" method="get">
+                    <input id="quantity" name="quantity" type="number" class="form-control" placeholder="" value="<?php echo $cartItem->getQuantity() ?>" min="0">
+                    <input type="hidden" name="productID" value="<?php echo $cartItem->getProduct()->getProductId() ?>">
+                    <button class="btn btn-outline-info card-link" type="submit" id="button-addon2">Save</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            <?php endforeach ?>
+          <?php endforeach ?>
+          <?php endif ?>
           </tbody>
         </table>
-          <?php endforeach ?>
-        <?php endforeach ?>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

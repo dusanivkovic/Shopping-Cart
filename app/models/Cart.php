@@ -40,7 +40,7 @@ class Cart
             $cartItem = new CartItem($product, 0);
             $this->items [$product->getProductId()] = $cartItem;
         }
-        $cartItem->increaseQuantity($quantity);
+        $cartItem->setQuantity($quantity);
         return $cartItem;
     }
 
