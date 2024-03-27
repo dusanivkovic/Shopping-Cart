@@ -68,9 +68,9 @@ $result = ($db->selectRecords($query))->fetch_all(MYSQLI_ASSOC);
                 <td>
                   <div id="edit-cart" class="input-group mb-3">
                     <form action="./../controllers/cart.php" method="get">
-                    <input id="quantity" name="quantity" type="number" class="form-control" placeholder="" value="<?php echo $cartItem->getQuantity() ?>" min="0">
-                    <input type="hidden" name="productID" value="<?php echo $cartItem->getProduct()->getProductId() ?>">
-                    <button class="btn btn-outline-info card-link" type="submit" id="button-addon2">Save</button>
+                      <input id="quantity" name="quantity" type="number" class="form-control" placeholder="" value="<?php echo $cartItem->getQuantity() ?>" min="0">
+                      <input type="hidden" name="productID" value="<?php echo $cartItem->getProduct()->getProductId() ?>">
+                      <button class="btn btn-outline-info card-link" type="submit" id="button-addon2">Save</button>
                     </form>
                   </div>
                 </td>
@@ -84,6 +84,7 @@ $result = ($db->selectRecords($query))->fetch_all(MYSQLI_ASSOC);
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a href="./../controllers/cart.php?submit_cart<?php echo ''#$cartItem->getProduct()->getProductId()?>" class="btn btn-primary" type="button">Submit</a>
       </div>
     </div>
   </div>

@@ -23,7 +23,9 @@ $form->addElement(new Button('Submit'));
 <?php echo $form->render(); ?>
     <div id="" class="is-invalid">
         <p>
-        <?php echo Session::get('mailError') ?: '' ;
+        <?php 
+            echo Session::get('mailError') ?: '' ;
+            echo Session::get('loginRequired') ?: '' ;
 
             Session::destroy();
         ?>

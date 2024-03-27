@@ -7,10 +7,28 @@ Session::init();
 $model = new Model ();
 $cart = unserialize((Session::get('cart'))) ?: new Cart();
 
-echo '<pre>';
-var_dump(($_GET));
-echo '</pre>';
+
 // exit;
+if (isset($_GET['submit_cart']))
+{
+    
+    echo '<pre>';
+    var_dump(($_GET));
+    print_r(unserialize(Session::get('user')));
+    var_dump(Session::get('userID'));
+    echo '</pre>';
+    $curentUser = unserialize(Session::get('user')) ?? null;
+    if ($curentUser)
+    {
+        $query;
+    }else
+    {
+        Session::set('loginRequired', 'You must log in to continue shopping! ');
+        header('location: ./../public/login.php');
+        exit;
+    }
+}
+
 
 $productId = $_POST['productID'] ?? $_GET['productID'];
 $quantity = $_POST['quantity'] ?? $_GET['quantity'];
@@ -32,7 +50,7 @@ if ($result->num_rows > 0)
     $product->addToCart($cart, $quantity);
     // $cart->addProduct($product, $quantity);
     $cart->setCartItemSession();
-    header('location: ./../public/index.php');
+    // header('location: ./../public/index.php');
 }
 echo '<pre>';
 print_r($cart);

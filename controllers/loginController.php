@@ -27,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         {
             $currentUser = $result->fetch_assoc();
             Session::set('userName', $currentUser['firstname']);
+            Session::set('userID', $currentUser['user_id']);
             header('location: ./../public/index.php');
         }else
         {
