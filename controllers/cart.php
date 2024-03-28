@@ -11,7 +11,6 @@ $cart = unserialize((Session::get('cart'))) ?: new Cart();
 // exit;
 if (isset($_GET['submit_cart']))
 {
-    
     echo '<pre>';
     var_dump(($_GET));
     print_r(unserialize(Session::get('user')));

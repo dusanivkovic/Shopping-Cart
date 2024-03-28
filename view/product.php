@@ -63,16 +63,17 @@ $result = ($db->selectRecords($query))->fetch_all(MYSQLI_ASSOC);
             <?php foreach ($row as $key => $cartItem ) : ?> 
               <tr class="table-active">
                 <td>
-                  <?php echo $cartItem->getProduct()->getProductTitle() ?>
+                  <span><?php echo $cartItem->getProduct()->getProductTitle() ?></span>
+                  <a href="./../controllers/cart.php?productID=<?php echo $cartItem->getProduct()->getProductId() ?>" class="btn btn-outline-danger card-link">Delete</a>
                 </td>
                 <td>
-                  <div id="edit-cart" class="input-group mb-3">
-                    <form action="./../controllers/cart.php" method="get">
+                  <form action="./../controllers/cart.php" method="get">
+                    <div id="edit-cart" class="input-group mb-3">
                       <input id="quantity" name="quantity" type="number" class="form-control" placeholder="" value="<?php echo $cartItem->getQuantity() ?>" min="0">
                       <input type="hidden" name="productID" value="<?php echo $cartItem->getProduct()->getProductId() ?>">
                       <button class="btn btn-outline-info card-link" type="submit" id="button-addon2">Save</button>
-                    </form>
-                  </div>
+                    </div>
+                  </form>
                 </td>
               </tr>
             <?php endforeach ?>
@@ -80,7 +81,6 @@ $result = ($db->selectRecords($query))->fetch_all(MYSQLI_ASSOC);
           <?php endif ?>
           </tbody>
         </table>
-
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
