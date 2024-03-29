@@ -11,11 +11,6 @@ $cart = unserialize((Session::get('cart'))) ?: new Cart();
 // exit;
 if (isset($_GET['submit_cart']))
 {
-    echo '<pre>';
-    var_dump(($_GET));
-    print_r(unserialize(Session::get('user')));
-    var_dump(Session::get('userID'));
-    echo '</pre>';
     $curentUser = unserialize(Session::get('user')) ?? null;
     if ($curentUser)
     {
@@ -28,7 +23,12 @@ if (isset($_GET['submit_cart']))
     }
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST')
+{
+    // $productId = $_POST['productID'];
+    // $quantity = $_POST['quantity'];
 
+}
 $productId = $_POST['productID'] ?? $_GET['productID'];
 $quantity = $_POST['quantity'] ?? $_GET['quantity'];
 
@@ -46,7 +46,13 @@ if ($result->num_rows > 0)
 {
     $result = $result->fetch_all(MYSQLI_ASSOC);
     $product = new Product($result[0]['product_id'], $result[0]['title'], $result[0]['price'], $result[0]['availableQuantity']);
-    $product->addToCart($cart, $quantity);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST')
+    {
+        $product->addToCart($cart, $quantity);
+    }else{
+        $cart->setItemsQuantity($quantity, $productId);
+    }
+
     // $cart->addProduct($product, $quantity);
     $cart->setCartItemSession();
     // header('location: ./../public/index.php');

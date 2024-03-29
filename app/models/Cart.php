@@ -40,11 +40,11 @@ class Cart
             $cartItem = new CartItem($product, 0);
             $this->items [$product->getProductId()] = $cartItem;
         }
-        $cartItem->setQuantity($quantity);
+        $cartItem->increaseQuantity();
         return $cartItem;
     }
 
-    private function findCartItem(int $productId)
+    public function findCartItem(int $productId)
     {
         return $this->items[$productId] ?? null;
     }
@@ -102,4 +102,16 @@ class Cart
     {
         Session::set('cart', serialize($this));
     }
+
+    public function setItemsQuantity (int $quantity, int $id): void
+    {
+        $cartItem = $this->findCartItem($id);
+
+        if ($quantity < $cartItem->getProduct()->getAvailableQuantity())
+        {
+            $cartItem->setQuantity($quantity);
+        }
+
+    }
+    
 }

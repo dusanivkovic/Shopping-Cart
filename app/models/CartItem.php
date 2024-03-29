@@ -27,13 +27,12 @@ class CartItem
     {
         return $this->quantity;
     }
+
     public function setQuantity (int $quantity): void
     {
-        if ($quantity < $this->product->getAvailableQuantity())
-        {
-            $this->quantity = $quantity;
-        }
+        $this->quantity = $quantity;
     }
+
 
     public function increaseQuantity()
     {
