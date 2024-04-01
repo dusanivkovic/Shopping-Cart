@@ -6,58 +6,75 @@ use app\lib\{Session, Db};
 Session::init();
 $model = new Model ();
 $cart = unserialize((Session::get('cart'))) ?: new Cart();
+$db = $model->setDataBase(new Db);
 
-$productId = $_POST['productID'] ?? $_GET['productID'];
-$quantity = $_POST['quantity'] ?? $_GET['quantity'];
+
 $curentUser = unserialize(Session::get('user')) ?? null;
 
 // exit;
 
 if (isset($_GET['submit_cart']))
 {
-    $productId = $_GET['productID'];
-    $quantity = $_GET['quantity'];
-    echo '<pre>';
-print_r($_GET['quantity']);
+
+echo '<pre>';
+print_r($curentUser);
 echo '</pre>';
+
+    // exit;
+
     if ($curentUser)
     {
-        $query = "INSERT INTO `cart`(`quantity`, `product_id`, `mail`) VALUES ('3', '1', $curentUser->getMail()";
+        $userId = Session::get('userID');
+        foreach ($cart->getCartItems() as $item)
+        {
+            $inserts[]= "('', '{$item->getQuantity()}', '{$item->getProduct()->getProductId()}', '{$userId}', '{$curentUser->getMail()}')";
+        }
+        $query = "INSERT INTO `cart`(`item_id`, `quantity`, `product_id`, `user_id`, `mail`) VALUES". implode(', ', $inserts);
+        $result = $db->insertRecord($query);
+        if ($result)
+        {
+            echo 'Success!';
+            Session::set('successQuery', 'You have successfully sent your inquiry!');
+            unset($_SESSION['cart']);
+            header('location: ./../public/index.php');
+            exit;
+        }
+
     }else
     {
         Session::set('loginRequired', 'You must log in to continue shopping! ');
         header('location: ./../public/login.php');
         exit;
     }
-}
-
-
-
-$query = "SELECT * FROM product WHERE product_id = $productId" ;
-$db = $model->setDataBase(new Db);
-$result = ($db->selectRecords($query));
-
-// if (!isset($_POST['productID']) || !isset($_POST['quantity']))
-// {
-//     include __DIR__ . '/../view/not_found.php';
-//     exit;
-// }
-
-if ($result->num_rows > 0)
+}else
 {
-    $result = $result->fetch_all(MYSQLI_ASSOC);
-    $product = new Product($result[0]['product_id'], $result[0]['title'], $result[0]['price'], $result[0]['availableQuantity']);
-    if ($_SERVER['REQUEST_METHOD'] === 'POST')
-    {
-        $product->addToCart($cart, $quantity);
-    }else{
-        $cart->setItemsQuantity($quantity, $productId);
-    }
+    $productId = ($_POST['productID'] ?? $_GET['productID']);
+    $quantity = $_POST['quantity'] ?? $_GET['quantity'];
+    $query = "SELECT * FROM product WHERE product_id = $productId" ;
 
-    // $cart->addProduct($product, $quantity);
-    $cart->setCartItemSession();
-    header('location: ./../public/index.php');
+    $result = ($db->selectRecords($query));
+    
+    
+    if ($result->num_rows > 0)
+    {
+        $result = $result->fetch_all(MYSQLI_ASSOC);
+        $product = new Product($result[0]['product_id'], $result[0]['title'], $result[0]['price'], $result[0]['availableQuantity']);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $product->addToCart($cart, $quantity);
+        }else{
+            $cart->setItemsQuantity($quantity, $productId);
+        }
+    
+        // $cart->addProduct($product, $quantity);
+        $cart->setCartItemSession();
+        header('location: ./../public/index.php');
+    }
 }
+
+
+
+
 
 // Session::destroy();
 
