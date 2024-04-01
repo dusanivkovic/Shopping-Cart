@@ -36,11 +36,6 @@ $result = ($db->selectRecords($query))->fetch_all(MYSQLI_ASSOC);
 </div>
 <?php endforeach ?>
 
-    <!-- echo '<pre>';
-    print_r($value->getQuantity());
-    print_r($value->getProduct()->getProductTitle());
-    echo '</pre>'; -->
-
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">

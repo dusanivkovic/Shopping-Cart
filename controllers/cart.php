@@ -7,14 +7,22 @@ Session::init();
 $model = new Model ();
 $cart = unserialize((Session::get('cart'))) ?: new Cart();
 
+$productId = $_POST['productID'] ?? $_GET['productID'];
+$quantity = $_POST['quantity'] ?? $_GET['quantity'];
+$curentUser = unserialize(Session::get('user')) ?? null;
 
 // exit;
+
 if (isset($_GET['submit_cart']))
 {
-    $curentUser = unserialize(Session::get('user')) ?? null;
+    $productId = $_GET['productID'];
+    $quantity = $_GET['quantity'];
+    echo '<pre>';
+print_r($_GET['quantity']);
+echo '</pre>';
     if ($curentUser)
     {
-        $query;
+        $query = "INSERT INTO `cart`(`quantity`, `product_id`, `mail`) VALUES ('3', '1', $curentUser->getMail()";
     }else
     {
         Session::set('loginRequired', 'You must log in to continue shopping! ');
@@ -23,14 +31,7 @@ if (isset($_GET['submit_cart']))
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST')
-{
-    // $productId = $_POST['productID'];
-    // $quantity = $_POST['quantity'];
 
-}
-$productId = $_POST['productID'] ?? $_GET['productID'];
-$quantity = $_POST['quantity'] ?? $_GET['quantity'];
 
 $query = "SELECT * FROM product WHERE product_id = $productId" ;
 $db = $model->setDataBase(new Db);
@@ -55,11 +56,9 @@ if ($result->num_rows > 0)
 
     // $cart->addProduct($product, $quantity);
     $cart->setCartItemSession();
-    // header('location: ./../public/index.php');
+    header('location: ./../public/index.php');
 }
-echo '<pre>';
-print_r($cart);
-echo '</pre>';
+
 // Session::destroy();
 
 

@@ -14,10 +14,11 @@ class User extends Model
         return $this->fm = $fm;
     }
 
-    // public function setDataBase (Db $db): Db
-    // {
-    //     return $this->db = $db;
-    // }
+
+    public function getId(): string
+    {
+        return $this->fm->data['id'];
+    }
 
     public function getFirstName(): string
     {
