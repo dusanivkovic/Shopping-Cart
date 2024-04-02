@@ -59,7 +59,7 @@ $result = ($db->selectRecords($query))->fetch_all(MYSQLI_ASSOC);
               <tr class="table-active">
                 <td>
                   <span><?php echo $cartItem->getProduct()->getProductTitle() ?></span>
-                  <a href="./../controllers/deleteCart.php?productID=<?php echo $cartItem->getProduct()->getProductId() ?>" class="btn btn-outline-danger card-link">Delete</a>
+                  <a id="delete-product" href="./../controllers/deleteCart.php?productID=<?php echo $cartItem->getProduct()->getProductId() ?>" class="btn btn-outline-danger card-link">Delete</a>
                 </td>
                 <td>
                   <form action="./../controllers/cart.php" method="get">

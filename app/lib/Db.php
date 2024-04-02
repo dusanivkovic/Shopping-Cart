@@ -38,4 +38,10 @@ class Db extends Model
     return $result ?? false;    
   }
 
+  public function updateRecord ($query)
+  {
+    $result = $this->conn->query($query) or die ('connection filed: ' .$this->conn->error . __LINE__);
+    return $result ?? false;    
+  }
+
 } 

@@ -8,29 +8,30 @@ $model = new Model ();
 $cart = unserialize((Session::get('cart'))) ?: new Cart();
 $db = $model->setDataBase(new Db);
 
-
 $curentUser = unserialize(Session::get('user')) ?? null;
-
-// exit;
 
 if (isset($_GET['submit_cart']))
 {
-
-echo '<pre>';
-print_r($curentUser);
-echo '</pre>';
-
-    // exit;
-
     if ($curentUser)
     {
         $userId = Session::get('userID');
         foreach ($cart->getCartItems() as $item)
         {
+            $updatedQuantity = ($item->getProduct()->getAvailableQuantity() - $item->getQuantity());
+            $queryRow []= " {$item->getProduct()->getProductId()} THEN {$updatedQuantity}";
+
             $inserts[]= "('', '{$item->getQuantity()}', '{$item->getProduct()->getProductId()}', '{$userId}', '{$curentUser->getMail()}')";
         }
         $query = "INSERT INTO `cart`(`item_id`, `quantity`, `product_id`, `user_id`, `mail`) VALUES". implode(', ', $inserts);
+        $decreaseProductQuery = "UPDATE `product` 
+        SET `availableQuantity` = CASE `product_id`
+                    WHEN  " 
+                    .implode("\n        WHEN", $queryRow)
+                    ."\n        ELSE availableQuantity\n"
+                    ."        END";
+
         $result = $db->insertRecord($query);
+        $db->updateRecord($decreaseProductQuery);
         if ($result)
         {
             echo 'Success!';
@@ -72,17 +73,3 @@ echo '</pre>';
     }
 }
 
-
-
-
-
-// Session::destroy();
-
-
-
-
-// if (!$productId)
-// {
-//     include __DIR__ . '/../view/not_found.php';
-//     exit;
-// }
